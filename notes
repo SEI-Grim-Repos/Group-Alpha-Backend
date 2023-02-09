@@ -1,0 +1,318 @@
+https://git.generalassemb.ly/sei-grimrepos/full-stack-auth/tree/router-v6
+
+https://git.generalassemb.ly/sei-grimrepos/django-rest
+
+'GA' Repo in code-alongs
+
+
+make virtual environment
+
+    mkvirtualenv group_alpha_backend
+
+create branch
+
+    git checkout -b backend-basics
+
+install django
+
+    pip install django
+
+get into the environment
+
+    workon .
+
+freeze and create requirements.txt (freeze gives a list of your installed dependencies)
+
+    pip freeze > requirements.txt
+
+create our project folder called group_alpha_backend (DONT FORGET THE PERIOD !!)
+
+    django-admin startproject group_alpha_backend .
+
+    python manage.py runserver
+
+now lets install pyscopg2-binary 
+
+    pip install psycopg2-binary
+
+create environment txt file, if someone wants to install from your requirements they can (pip install -r requirements.txt [alias i made for it pfr])
+
+    pip freeze >requirements.txt
+
+make a quick sql file
+
+    touch create-database.sql
+
+<!-- in create-database.sql file
+    CREATE DATABASE group_alpha_backend;
+
+    CREATE USER group-alpha-backendWITH PASSWORD 'password';
+
+    GRANT ALL PRIVILEGES ON DATABASE ga TO group-alpha-backend_admin; -->
+
+
+first we need to create the DATABASE before we make the admin and pw (make sure you're in psql)
+
+    CREATE DATABASE food;
+
+then create the user and pw 
+
+    CREATE USER group_alpha_backend_admin WITH PASSWORD 'password';
+
+Give that user permission to manage the database:
+
+    GRANT ALL PRIVILEGES ON DATABASE  TO group_alpha_backend_admin;
+
+Now we need to run migrations to basically save what we added ( this may not work until we add an admin for our app and make a password) (the first one checks what changes were added and the second one implements the changes in the live server)
+
+    python manage.py makemigrations 
+
+then
+
+    python manage.py migrate
+
+(make user super user code below) you can check if the table was created with \d (in psql)
+
+    alter role group_alpha_backend_admin with superuser;
+
+go to line 76 in settings.py to change to the following 
+    
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'food',
+        'USER': 'group_alpha_backend_admin',
+        'PASSWORD': 'password',
+        'HOST': 'localhost'
+    }
+}
+
+now run the server to see if we run into any issues (create new alias, go to zshrc [i have a alias already for it, zshrc ] make sure you source after making changes to the zshrc file (source ~/.zshrc)) SERVER SHOULD BE RUNNING, WHICH IT DOES FOR THIS HW
+
+    python manage.py runserver
+
+<!-- ** make sure django is installed in the virtual environment (was not working for me so i had to drop the db and user ga_admin and typed this into the psql terminal )
+
+    CREATE DATABASE foods;
+
+    CREATE USER group_alpha_backend_admin WITH PASSWORD 'password';
+
+    GRANT ALL PRIVILEGES ON DATABASE food TO group_alpha_backend_admin; -->
+
+create app inside of projects
+
+    django-admin startapp foodies
+
+in line 33 add the sudents app to the settings.py(should look like)   
+
+
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'foodies'
+    ]
+
+create model in the models.py in the student folder (shoudl look  like)
+    from django.db import models
+    import datetime
+
+    COUNTRIES_LIST = ['List of All Countries']
+
+    class User(models.Model):
+        username = models.CharField(max_length = 50)
+        password = models.CharField(max_length = 32)
+        location = models.CharField(
+		    max_length = 20,
+		    choices = COUNTRIES_LIST,
+	        default = None
+	    )
+        def __str__(self):
+	        return self.username
+
+
+    class Post(models.Model):
+	    user_id = models.IntegerField()
+	    date = models.DateField.auto_now_add
+	    image = models.FileField()
+	    title = models.CharField(max_length = 75)
+	    body = models.TextField()
+	    location = models.CharField(
+		    max_length = 20,
+		    choices = COUNTRIES_LIST,
+		    default = None
+	    )
+        likes = models.IntegerField()
+        
+        def __str__(self):
+            return self.title
+            
+
+    class Comment(models.Model):
+        user_id = models.IntegerField()
+        post_id = models.IntegerField()
+        body = models.TextField()
+        post= models.ForeignKey(
+            Post,
+            on_delete= models.CASCADE,
+            default= None
+        )
+        def __str__ (self):
+            return self.body
+
+
+make mirgrations
+ 
+    python manage.py makemigrations
+
+    python manage.py migrate
+
+look at db (psql )
+
+    \c foods (foods is the name of the database)
+
+    \d (lists everything in the db) (exit it by typing q)
+
+# check to see if our server is giving us an errors (on web) (python manage.py runserver)
+
+we need to register our models (foodies/admin.py)
+
+    from django.contrib import admin
+    from .models import User, Post, Comment
+
+    # Register your models here.
+    admin.site.register(User)
+    admin.site.register(Post)
+    admin.site.register(Comment)
+
+
+create superuser
+
+    python manage.py createsuperuser
+ 
+    us: group_alpha_backend_admin
+    email:
+    pw: 123
+
+run localhost:8000/admin
+
+<!-- login (did not work for me so ask for help, it was fixed [had another localhost running]) -->
+
+<!-- after logging in, create student and but it in the student object in the cohort[you can SELECT * students and your new student should by added] (should not be an object so in our students/models.py we need to add the def __str__ after the cohort model)
+
+    def __str__(self):
+    return f'{self.subject} - {self.name}'
+
+cohort should be updated (in cohort)
+
+now we need to update student string (make sure its indented and is apart of the student string)
+
+    def __str__(self):
+        return f'{self.name} ({self.cohort})' -->
+
+check db
+
+    psql
+
+    \c django_api_lab
+
+    select * from book_django_lab_book ;
+
+   select * from  book_django_lab_author;
+
+
+
+NOW LETS DO REST
+
+in virtual env  (reminder: workon .)
+
+    pip install djangorestframework
+
+    pip freeze > requirements.txt
+
+now add it to installed apps in settings.py
+
+    INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'students'
+    ]
+
+
+
+
+
+
+
+now 
+    
+    touch students/ serializers.py
+
+and add this 
+
+    from rest_framework import serializers
+    
+    from .models import Book, Author
+
+    class CohortSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Book
+            fields = '__all__'
+
+    class StudentSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Author
+            fields = '__all__'
+
+OPEN  book_django_api_lab/views.py 
+remove django default method bc we want to see json
+
+    from rest_framework import viewsets
+
+    from .serializers import BookSerializer, AuthorSerializer
+    from .models import Book, Author
+
+
+    class BookViewSet(viewsets.ModelViewSet):
+        queryset = Book.objects.all()
+        serializer_class = BookSerializer
+    
+    class AuthorViewSet(viewsets.ModelViewSet):
+        queryset = Author.objects.all()
+        serializer_class = AuthorSerializer
+
+
+we need to say which view set is associated with which endpoint. That's done inside of django_api_lab/urls.py
+
+    from django.contrib import admin
+    from django.urls import path, include
+
+    from rest_framework import routers
+    from book_django_lab.views import BookViewSet, AuthorViewSet
+
+    router = routers.DefaultRouter()
+    router.register(r'book', BookViewSet)
+    router.register(r'author', AuthorViewSet)
+
+
+    urlpatterns = [
+        path('', include(router.urls)),
+        path('admin/', admin.site.urls)
+    ]
+
+make sure you add the rest framework of the dependencies in the intalled apps in the settings.py
+
+    'rest_framework'
+
+now lets check to see if the routes work
+ 
+    http://localhost:8000/author
+    http://localhost:8000/book
