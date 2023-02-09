@@ -255,7 +255,7 @@ class User(models.Model):
 class Post(models.Model):
 	user_id = models.IntegerField()
 	date = models.DateField.auto_now_add= True
-	image = models.FileField()
+	image = models.TextField(default=None)
 	title = models.CharField(max_length = 75)
 	body = models.TextField()
 	location = models.CharField(
