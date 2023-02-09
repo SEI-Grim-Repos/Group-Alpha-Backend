@@ -63,7 +63,7 @@ Give that user permission to manage the database:
 
     GRANT ALL PRIVILEGES ON DATABASE  TO group_alpha_backend_admin;
 
-Now we need to run migrations to basically save what we added ( this may not work until we add an admin for our app and make a password)
+Now we need to run migrations to basically save what we added ( this may not work until we add an admin for our app and make a password) (the first one checks what changes were added and the second one implements the changes in the live server)
 
     python manage.py makemigrations 
 
@@ -74,18 +74,6 @@ then
 (make user super user code below) you can check if the table was created with \d (in psql)
 
     alter role group_alpha_backend_admin with superuser;
-
-we have db existing now we need to let the file interacts (will not show up until u download thing)
-
-     install psycopg2-binary  
-
-make sure you add it to the requirements.txt file
-
-    pip freeze > requirements.txt 
-
-to check if its in the .txt file
-
-    cat requirements.txt
 
 go to line 76 in settings.py to change to the following 
     
