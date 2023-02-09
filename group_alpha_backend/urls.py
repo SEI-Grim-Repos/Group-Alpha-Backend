@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from rest_framework import routers
 from foodies.views import UserViewSet, PostViewSet, CommentViewSet
-import settings
+
 
 router = routers.DefaultRouter()
 router.register(r'User', UserViewSet)
