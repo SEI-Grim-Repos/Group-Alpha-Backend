@@ -1,1 +1,1 @@
-web: gunicorn gourmet-gather.wsgi --log-file -
+web: gunicorn group_alpha_backend.wsgi --log-file -
