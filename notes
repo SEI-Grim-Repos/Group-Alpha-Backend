@@ -53,7 +53,7 @@ make a quick sql file
 
 first we need to create the DATABASE before we make the admin and pw (make sure you're in psql)
 
-    CREATE DATABASE foods;
+    CREATE DATABASE food;
 
 then create the user and pw 
 
