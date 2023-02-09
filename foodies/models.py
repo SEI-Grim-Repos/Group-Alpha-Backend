@@ -1,6 +1,7 @@
 from django.db import models
+import datetime
 
-COUNTRIES_LIST = ['List of All Countries']
+COUNTRIES_LIST = [('lac', 'List of All Countries'), ('US', 'United States of America')]
 
 class User(models.Model):
     username = models.CharField(max_length = 50)
@@ -16,7 +17,7 @@ class User(models.Model):
 
 class Post(models.Model):
 	user_id = models.IntegerField()
-	date = models.DateField.auto_now_add
+	date = models.DateField()
 	image = models.FileField()
 	title = models.CharField(max_length = 75)
 	body = models.TextField()
@@ -29,11 +30,12 @@ class Post(models.Model):
 	
 	def __str__(self):
 		return self.title
-        
+
 
 class Comment(models.Model):
     user_id = models.IntegerField()
-    post_id = models.IntegerField()
+
+    # post_id = models.IntegerField()
     body = models.TextField()
     post= models.ForeignKey(
         Post,
