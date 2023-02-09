@@ -79,7 +79,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', 'gourmet-gather.heroku.app']
+ALLOWED_HOSTS = ['localhost', 'gourmet-gather.herokuapp.com']
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
