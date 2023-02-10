@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodies',
-    'rest_framework'
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -84,9 +84,13 @@ ALLOWED_HOSTS = ['localhost', 'gourmet-gather.herokuapp.com']
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+import dj_database_url
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'food',
         'USER': 'group_alpha_backend_admin',
         'PASSWORD': 'password',
@@ -94,6 +98,8 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 
@@ -139,7 +145,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# May not be required; testing
+
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
