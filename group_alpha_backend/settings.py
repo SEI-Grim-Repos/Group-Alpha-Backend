@@ -31,14 +31,15 @@ SECRET_KEY = 'django-insecure-o%9gyf9*lpcs*_tbb*xdw&t+-&st2sf$oat&embvex-os0)+_b
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'foodies',
-    'rest_framework'
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -79,21 +80,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', 'gourmet-gather.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+import dj_database_url
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'food',
         'USER': 'group_alpha_backend_admin',
         'PASSWORD': 'password',
-        'HOST': ALLOWED_HOSTS,
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+WHITENOISE_USE_FINDERS = True
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
@@ -139,6 +151,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
