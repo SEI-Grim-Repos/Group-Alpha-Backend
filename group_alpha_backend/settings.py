@@ -69,6 +69,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = [
     'https://gourmet-gather.herokuapp.com',
+    'http://localhost:3000',
 ]
 
 CORS_ALLOW_METHODS = [
