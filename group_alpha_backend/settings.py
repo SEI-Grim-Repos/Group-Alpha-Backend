@@ -56,9 +56,8 @@ MIDDLEWARE = [
 ]
 
 
-# CORS_ORIGIN_ALLOW_ALL = True
-
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     'http://localhost:9001',
@@ -73,8 +72,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://gourmet-gather.herokuapp.com',
     'http://localhost:3000',
 ]
-
-CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = [
     "DELETE",
@@ -107,7 +104,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 
 DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', "localhost"]
+ALLOWED_HOSTS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -183,5 +180,3 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
-
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
