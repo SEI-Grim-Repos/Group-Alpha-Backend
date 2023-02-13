@@ -55,14 +55,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsPostCsrfMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:9001',
-    'http://localhost:3000',
-    'localhost',
-    'http://127.0.0.1:9002',
-    'http://127.0.0.1:3000',
-    'gourmet-gather.herokuapp.com',
-]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:9001',
+#     'http://localhost:3000',
+#     'localhost',
+#     'http://127.0.0.1:9002',
+#     'http://127.0.0.1:3000',
+#     'gourmet-gather.herokuapp.com',
+# ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://gourmet-gather.herokuapp.com',
