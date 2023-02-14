@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o%9gyf9*lpcs*_tbb*xdw&t+-&st2sf$oat&embvex-os0)+_b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://gourmetgather.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'food',
         'USER': 'group_alpha_backend_admin',
         'PASSWORD': 'password',
-        'HOST': 'https://gourmetgather.herokuapp.com',
+        'HOST': 'localhost',
     }
 }
 
