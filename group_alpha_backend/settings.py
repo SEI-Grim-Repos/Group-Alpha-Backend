@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o%9gyf9*lpcs*_tbb*xdw&t+-&st2sf$oat&embvex-os0)+_b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://gg1114.herokuapp.com', 'gg1114.herokuapp.com']
 
 
 # Application definition
@@ -80,14 +80,13 @@ WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'food',
-        'USER': 'group_alpha_backend_admin',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': 'd7ccfvpjnn3nbm',
+        'USER': 'sozjnewxceuitp',
+        'PASSWORD': '631977fbc2d4aa1a93cabf08e51e0bb9e2c7562f575a3468ab7f206ea7a45607',
+        'HOST': 'ec2-54-164-40-66.compute-1.amazonaws.com',
     }
 }
 
@@ -134,3 +133,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://gg1114.herokuapp.com',
+]
