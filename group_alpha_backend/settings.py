@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o%9gyf9*lpcs*_tbb*xdw&t+-&st2sf$oat&embvex-os0)+_b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://gg1114.herokuapp.com', 'gg1114.herokuapp.com']
+ALLOWED_HOSTS = ['https://gourmet-gather.herokuapp.com', 'gourmet-gather.herokuapp.com']
 
 
 # Application definition
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'group_alpha_backend.urls'
@@ -76,17 +76,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd7ccfvpjnn3nbm',
-        'USER': 'sozjnewxceuitp',
-        'PASSWORD': '631977fbc2d4aa1a93cabf08e51e0bb9e2c7562f575a3468ab7f206ea7a45607',
-        'HOST': 'ec2-54-164-40-66.compute-1.amazonaws.com',
+        'NAME': 'dfmb5tm53tc596',
+        'USER': 'gggcgsvhmtlumt',
+        'PASSWORD': '23b098222858ab58cac731d7c2326da62fda29cbdfdf6eb516e2f331c7b250cd',
+        'HOST': 'ec2-44-199-143-43.compute-1.amazonaws.com',
     }
 }
 
@@ -134,5 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://gg1114.herokuapp.com',
+    'https://gourmet-gather.herokuapp.com',
 ]
