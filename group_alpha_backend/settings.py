@@ -23,22 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o%9gyf9*lpcs*_tbb*xdw&t+-&st2sf$oat&embvex-os0)+_b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['https://gourmet-gather.herokuapp.com', 'gourmet-gather.herokuapp.com', 'localhost', 'http://localhost']
+ALLOWED_HOSTS = ['https://gg1114.herokuapp.com', 'gg1114.herokuapp.com', 'localhost', 'http://localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'foodies',
     'rest_framework',
     'rest_framework_simplejwt',
     'foodies',
@@ -61,6 +60,8 @@ REST_KNOX = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,37 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'corsheaders.middleware.CorsPostCsrfMiddleware',
-]
-
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:9001',
-#     'http://localhost:3000',
-#     'localhost',
-#     'http://127.0.0.1:9002',
-#     'http://127.0.0.1:3000',
-#     'gourmet-gather.herokuapp.com',
-# ]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://gourmet-gather.herokuapp.com',
-    'http://localhost:3000',
-]
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-    "authorization",
+    
 ]
 
 ROOT_URLCONF = 'group_alpha_backend.urls'
@@ -121,30 +92,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'group_alpha_backend.wsgi.application'
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
-import dj_database_url
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dfmb5tm53tc596',
-        'USER': 'gggcgsvhmtlumt',
-        'PASSWORD': '23b098222858ab58cac731d7c2326da62fda29cbdfdf6eb516e2f331c7b250cd',
-        'HOST': 'ec2-44-199-143-43.compute-1.amazonaws.com',
+        'NAME': 'd7ccfvpjnn3nbm',
+        'USER': 'sozjnewxceuitp',
+        'PASSWORD': '631977fbc2d4aa1a93cabf08e51e0bb9e2c7562f575a3468ab7f206ea7a45607',
+        'HOST': 'ec2-54-164-40-66.compute-1.amazonaws.com',
     }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -191,13 +152,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://gourmet-gather.herokuapp.com',
+    'https://gg1114.herokuapp.com',
     'http://localhost',
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
