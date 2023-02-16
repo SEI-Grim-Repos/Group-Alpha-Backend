@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
-from foodies.views import PostViewSet, CommentViewSet
+from foodies.views import PostViewSet, CommentViewSet, UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'Post', PostViewSet)
