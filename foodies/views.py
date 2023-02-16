@@ -28,8 +28,6 @@ class AllPost_ViewSet(APIView):
       user = self.request.user
       isAuthenticated = user.is_authenticated
       if isAuthenticated:
-          print("Is Authenticated:", isAuthenticated)
-          print("Request Data:", request.data)
           body = request.data['body']
           location = request.data['location']
           date = request.data['date']
@@ -38,7 +36,6 @@ class AllPost_ViewSet(APIView):
           likes = request.data['likes']
           # This is to get the profile of the user who is making this post
           userProfile = User_Account.objects.get(user=user)
-          print("User Profile:", userProfile)
           Post.objects.create(user=userProfile, body=body, location=location, title=title, date=date, image=image, likes=likes)
           return Response({'message': " ◕‿↼ Post Successfully Created ! "})
       else:
@@ -49,9 +46,7 @@ class AllPost_ViewSet(APIView):
   def get(self, request): 
     try:
       results = Post.objects.all()
-      print("Results:", results)
       all_post = PostSerializer(results, many=True)
-      print("All Posts Data:", all_post.data)
       return Response(all_post.data)
     except:
       return Response({"error": "( ﾟДﾟ)b  somthing went wrong "})
@@ -66,8 +61,10 @@ class OnePost_ViewSet(APIView):
       post = PostSerializer(post_results)
       comments_results = Comment.objects.filter(post=id)
       comments = CommentSerializer(comments_results, many=True)
-      return Response({"post":post.data,"comments":comments.data})
-    except:
+      
+      return Response({"post": post.data, "comments": comments.data})
+    except Exception as e:
+      print("Error getting One Post:", e)
       return Response({"error": "( ﾟДﾟ)b  somthing went wrong "})
   
 class Comment_ViewSet(APIView):
@@ -78,11 +75,14 @@ class Comment_ViewSet(APIView):
     try:
       user = self.request.user
       isAuthenticated = user.is_authenticated
+      print("I'm in user comment creation")
       if isAuthenticated:
           body = request.data['body']
           # This is to get the profile of the user who is making this post
           userProfile = User_Account.objects.get(user=user)
           post = Post.objects.get(id=id)
+          print("Userprofile:", userProfile)
+          print("Post:", post)
           Comment.objects.create(user=userProfile, body=body, post=post)
           return Response({'message': " ◕‿↼ Comment Successfully Created ! "})
       else:
