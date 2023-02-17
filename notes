@@ -43,13 +43,9 @@ make a quick sql file
 
     touch create-database.sql
 
-<!-- in create-database.sql file
-    CREATE DATABASE group_alpha_backend;
 
-    CREATE USER group-alpha-backendWITH PASSWORD 'password';
 
-    GRANT ALL PRIVILEGES ON DATABASE ga TO group-alpha-backend_admin; -->
-
+in create-database.sql file
 
 first we need to create the DATABASE before we make the admin and pw (make sure you're in psql)
 
@@ -87,17 +83,10 @@ go to line 76 in settings.py to change to the following
     }
 }
 
-now run the server to see if we run into any issues (create new alias, go to zshrc [i have a alias already for it, zshrc ] make sure you source after making changes to the zshrc file (source ~/.zshrc)) SERVER SHOULD BE RUNNING, WHICH IT DOES FOR THIS HW
+now run the server to see if we run into any issues (create new alias, go to zshrc [i have a alias already for it, zshrc ] make sure you source after making changes to the zshrc file (source ~/.zshrc)) SERVER SHOULD BE RUNNING
 
     python manage.py runserver
 
-<!-- ** make sure django is installed in the virtual environment (was not working for me so i had to drop the db and user ga_admin and typed this into the psql terminal )
-
-    CREATE DATABASE foods;
-
-    CREATE USER group_alpha_backend_admin WITH PASSWORD 'password';
-
-    GRANT ALL PRIVILEGES ON DATABASE food TO group_alpha_backend_admin; -->
 
 create app inside of projects
 
@@ -116,11 +105,13 @@ in line 33 add the sudents app to the settings.py(should look like)
         'foodies'
     ]
 
-create model in the models.py in the student folder (shoudl look  like)
+create model in the models.py in the student folder (should look  like)
+
     from django.db import models
     import datetime
 
-    COUNTRIES_LIST = ['List of All Countries']
+    COUNTRIES_LIST = [ **Actual list of countries, check the models.py file to see it
+    ]
 
     class User(models.Model):
         username = models.CharField(max_length = 50)
@@ -135,25 +126,26 @@ create model in the models.py in the student folder (shoudl look  like)
 
 
     class Post(models.Model):
-	    user_id = models.IntegerField()
-	    date = models.DateField.auto_now_add
-	    image = models.FileField()
-	    title = models.CharField(max_length = 75)
-	    body = models.TextField()
-	    location = models.CharField(
-		    max_length = 20,
-		    choices = COUNTRIES_LIST,
-		    default = None
-	    )
+        user_id = models.IntegerField()
+        date = models.DateField.auto_now_add= True
+        image = models.TextField(default=None)
+        title = models.CharField(max_length = 75)
+        body = models.TextField()
+        location = models.CharField(
+            max_length = 20,
+            choices = COUNTRIES_LIST,
+            default = None
+        )
         likes = models.IntegerField()
         
         def __str__(self):
             return self.title
-            
+
 
     class Comment(models.Model):
         user_id = models.IntegerField()
-        post_id = models.IntegerField()
+
+        # post_id = models.IntegerField()
         body = models.TextField()
         post= models.ForeignKey(
             Post,
@@ -272,13 +264,13 @@ and add this
             model = Author
             fields = '__all__'
 
-OPEN  book_django_api_lab/views.py 
+OPEN  foodies/views.py 
 remove django default method bc we want to see json
 
     from rest_framework import viewsets
 
     from .serializers import BookSerializer, AuthorSerializer
-    from .models import Book, Author
+    from .models import, Author
 
 
     class BookViewSet(viewsets.ModelViewSet):
@@ -296,11 +288,12 @@ we need to say which view set is associated with which endpoint. That's done ins
     from django.urls import path, include
 
     from rest_framework import routers
-    from book_django_lab.views import BookViewSet, AuthorViewSet
+    from book_django_lab.views import PostViewSet, CommentViewSet, UserViewSet
 
     router = routers.DefaultRouter()
-    router.register(r'book', BookViewSet)
-    router.register(r'author', AuthorViewSet)
+    router.register(r'post', PostViewSet)
+    router.register(r'comment', CommentViewSet)
+    router.register(r'user', UserViewSet)
 
 
     urlpatterns = [
@@ -314,5 +307,6 @@ make sure you add the rest framework of the dependencies in the intalled apps in
 
 now lets check to see if the routes work
  
-    http://localhost:8000/author
-    http://localhost:8000/book
+    http://localhost:8000/User
+    http://localhost:8000/Post
+    http://localhost:8000/Comment
