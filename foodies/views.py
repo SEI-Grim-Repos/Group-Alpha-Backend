@@ -61,7 +61,7 @@ class OnePost_ViewSet(APIView):
             comments = CommentSerializer(comments_results, many=True)
             
             return Response({"post": post.data, "comments": comments.data})
-        except Exception as e:
+        except Exception as e:  
             print("Error getting One Post:", e)
             return Response({"error": "Something went wrong"})
     def put(self, request, id):
