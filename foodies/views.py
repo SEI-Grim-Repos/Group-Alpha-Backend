@@ -5,7 +5,6 @@ from .serializers import User_AccountSerializer, CommentSerializer, PostSerializ
 from rest_framework import permissions
 from rest_framework.response import Response
 
-# Create your views here.
 
 class User_AccountViewSet(viewsets.ModelViewSet):
     queryset = User_Account.objects.all()
@@ -34,7 +33,6 @@ class AllPost_ViewSet(APIView):
                 title = request.data['title']
                 image = request.data['image']
                 likes = request.data['likes']
-                # This is to get the profile of the user who is making this post
                 userProfile = User_Account.objects.get(user=user)
                 Post.objects.create(user=userProfile, body=body, location=location, title=title, date=date, image=image, likes=likes)
                 return Response({'message': "Post Successfully Created"})
@@ -69,7 +67,6 @@ class OnePost_ViewSet(APIView):
     def put(self, request, id):
         try:
             user = self.request.user
-            # print(user)
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 body = request.data['body']
@@ -120,7 +117,6 @@ class Comment_ViewSet(APIView):
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 body = request.data['body']
-                # This is to get the profile of the user who is making this post
                 userProfile = User_Account.objects.get(user=user)
                 post = Post.objects.get(id=id)
                 Comment.objects.create(user=userProfile, body=body, post=post)
